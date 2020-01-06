@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 
 import Question from "../question";
 import Quiz from "../quiz/addQuestion";
-import AllQuizzes from "../../components/QuestionList";
+import AllQuizzes from "../quiz/all";
 
 const index = props => {
   const selectContent = () => {
@@ -16,11 +16,14 @@ const index = props => {
       return <Route path="/question" component={() => <Question />} />;
     }
     if (content === "quiz") {
-      return <Quiz />;
+      return <Route path="/quiz" component={() => <Quiz />} />;
     }
     if (content === "all-quiz") {
-      return <AllQuizzes />;
+      return <Route path="/all-quiz" component={() => <AllQuizzes />} />;
     }
+    if (content === "quiz:id") {
+      return <h1>QUIZZZZ!</h1>;
+    } 
   };
 
   return <div>{selectContent()}</div>;

@@ -50,5 +50,19 @@ class Request {
         });
     });
   }
+
+  getAllQuiz(data) {
+    return new Promise((next, error) => {
+      authAxios
+        .get("/quiz")
+        .then(d => {
+          next(d.data);
+        })
+        .catch(err => {
+          next({ error: true, err });
+          error(err);
+        });
+    });
+  }
 }
 export default new Request();

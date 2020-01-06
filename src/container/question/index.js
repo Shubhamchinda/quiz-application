@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Icon, Button, Radio, Form } from "antd";
+import { Card, Icon, Button, Radio, Form, notification  } from "antd";
 // import capitalize from "capitalize";
 import _ from "lodash";
 
@@ -7,7 +7,7 @@ import Draft from "./../../components/draft";
 import styles from "./styles.less";
 import FormItem from "../../components/FormItem";
 import Request from "../../request";
-import { notification } from "antd/lib";
+// import { notification } from "antd/lib";
 
 /* eslint-disable react/no-multi-comp */
 @Form.create()

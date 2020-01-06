@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
 // import PageHeaderWrapper from "../../../components/PageHeaderWrapper";
-import { Form, Select, Card, Button, Spin } from "antd";
+import { Form, Select, Card, Button, Spin, notification } from "antd";
 import _ from "lodash";
-import { notification } from "antd/lib/index";
+// import { notification } from "antd/lib/index";
 import Request from "../../../request";
 import { stateFromHTML } from "draft-js-import-html";
 
@@ -67,9 +67,9 @@ class AddQuesToTest extends PureComponent {
               questions: newQuesData,
               description: this.state.instructions
             };
-            
+
             const x = await Request.addQuiz(body);
-            console.log(body,x, "BODY");
+            console.log(body, x, "BODY");
             if (!x.error) {
               notification.success({
                 message: x.message
