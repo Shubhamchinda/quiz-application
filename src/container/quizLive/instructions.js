@@ -24,12 +24,8 @@ class profile extends React.Component {
   };
   componentDidMount() {
     this.apiRequest();
-    this.props.dispatch({
-      type: "TOGGLE_SIDEBAR_COLLAPSED"
-    });
   }
   handleSubmit = () => {
-    // this.props.dispatch(getPushPathWrapper('live', { id: this.state.id }))
     // Request.submitTest({ id: this.state.id })
   };
 
@@ -109,7 +105,6 @@ class profile extends React.Component {
             </div>
           </p>
         </Card>
-        {/* {duration && <Timer duration={duration} />} */}
         <Card loading={loading}>
           <h1 style={{ textAlign: "center", fontSize: "20px" }}>
             Instructions
