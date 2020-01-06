@@ -227,9 +227,9 @@ class Question extends Component {
           }
         >
           <Draft
-            editorState={reset && reset ? `Answer-${key}` : `Answer-${key}`}
+            // editorState={reset && reset ? `Answer-${key}` : `Answer-${key}`}
             onChange={data => {
-              this.onAnsChange(data.editor.getData(), key);
+              this.onAnsChange(data, key);
             }}
           />
         </Card>
@@ -261,16 +261,16 @@ class Question extends Component {
     return (
       <>
         <Form onSubmit={this.handleSubmit}>
-          <div id={"quesType"}>
+          <div>
             <div className={styles.type}>
-              <p>{`${capitalize(type || "as")} type MCQ`} </p>
+              <p>{`Create Questions`} </p>
             </div>
             <Card id={"question"}>
               <Card title={"Question :"}>
                 <Draft
-                  editorState={reset && reset ? "" : "<p>Question</p>"}
+                  // editorState={reset && reset ? "" : "<p>Question</p>"}
                   onChange={data => {
-                    this.onQuesChange(data.editor.getData());
+                    this.onQuesChange(data);
                   }}
                 />
               </Card>
@@ -279,9 +279,9 @@ class Question extends Component {
               <div>
                 <Card title={"Solution :"} id={"solution"}>
                   <Draft
-                    editorState={reset && reset ? "" : "<p>Solution</p>"}
+                    // editorState={reset && reset ? "" : "<p>Solution</p>"}
                     onChange={data => {
-                      this.onSolChange(data.editor.getData());
+                      this.onSolChange(data);
                     }}
                   />
                 </Card>

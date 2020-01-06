@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 
 import { Layout, Menu, Breadcrumb, Icon } from "antd";
-import ContentComp from '../container/content'
+import ContentComp from "../container/content";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 const SiderDemo = props => {
   const [collapsed, setCollapsed] = useState(false);
-  const [key, setKey] = useState(null);
+  const [key, setKey] = useState('dashboard');
 
   const onCollapse = collapsed => {
     console.log(collapsed);
@@ -18,7 +18,7 @@ const SiderDemo = props => {
 
   const handleRoute = value => {
     props.history.push(value.key);
-    console.log(value)
+    console.log(value);
     setKey(value.key);
   };
 
@@ -32,19 +32,23 @@ const SiderDemo = props => {
         <div className="logo" />
         <Menu
           theme="dark"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={["dashboard"]}
           mode="inline"
           onSelect={handleRoute}
         >
-          <Menu.Item key={"/question"}>
+          <Menu.Item key={"dashboard"}>
+            <Icon type="pie-chart" />
+            <span>Dashboard</span>
+          </Menu.Item>
+          <Menu.Item key={"question"}>
             <Icon type="pie-chart" />
             <span>Create Questions</span>
           </Menu.Item>
-          <Menu.Item key={"/quiz"}>
+          <Menu.Item key={"quiz"}>
             <Icon type="desktop" />
             <span>Create Quiz</span>
           </Menu.Item>
-          <Menu.Item key={"/all-quiz"}>
+          <Menu.Item key={"all-quiz"}>
             <Icon type="desktop" />
             <span>All Quizzes</span>
           </Menu.Item>
@@ -53,7 +57,7 @@ const SiderDemo = props => {
       <Layout>
         <Header style={{ background: "#fff", padding: 0 }} />
         <Content style={{ margin: "0 16px", padding: 24 }}>
-          <ContentComp />
+          <ContentComp content={key} />
         </Content>
         <Footer style={{ textAlign: "center" }}>Ant Design ©2018</Footer>
       </Layout>

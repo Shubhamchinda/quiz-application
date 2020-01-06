@@ -1,15 +1,33 @@
-import React from 'react'
+import React from "react";
 
-import Question from '../question'
+import Question from "../question";
+import Quiz from "../quiz/addQuestion";
+import AllQuizzes from "../../components/QuestionList";
 
-const index = (props) => {
+const index = props => {
 
+const selectContent = () => {
+    const {content} = props
 
-    return (
-        <div>
-            Question
-        </div>
-    )
+    if(content === 'dashboard'){
+        return <p>This is a dashboard</p>
+    }
+   if(content === 'question'){
+        return <Question />
+    } 
+    if(content === 'quiz'){
+        return <Quiz />
+    }
+    if(content === 'all-quiz'){
+        return <AllQuizzes />
+    }
 }
 
-export default index
+  return (
+    <div>
+      {selectContent()}
+    </div>
+  );
+};
+
+export default index;
