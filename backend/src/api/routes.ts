@@ -20,21 +20,19 @@ app
   });
 
 app
-  .route("/test")
+  .route("/quiz")
   .post(async (req: Request, res: Response) => {
     const { body } = req;
-    // const resp = await quesCtrl.add(body)
     const resp = await testCtrl.add(body);
     res.json(resp);
   })
   .get(async (req: Request, res: Response) => {
-    // const resp = await quesCtrl.all()
     const resp = await testCtrl.all(req.query);
     res.json(resp);
   });
 
 app
-  .route("/test/:_id")
+  .route("/quiz/:_id")
   .get(async (req: Request, res: Response) => {
     const { _id } = req.params;
     const resp = await testCtrl.get(_id);

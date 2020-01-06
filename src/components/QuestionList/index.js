@@ -1,53 +1,56 @@
-import React, { Component } from 'react'
-import { Table, Card, Button, Icon, Input, Tag } from 'antd'
-import Highlighter from 'react-highlight-words'
+import React, { Component } from "react";
+import { Table, Card, Button, Icon, Input, Tag } from "antd";
+import Highlighter from "react-highlight-words";
 
-import Request from '../../request'
-import _ from 'lodash'
-import styles from './styles.less'
-import ReactHtmlParser from 'react-html-parser'
-
+import Request from "../../request";
+import _ from "lodash";
+import styles from "./styles.less";
+import ReactHtmlParser from "react-html-parser";
 
 class QuestionList extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       data: null,
       search: false
-    }
+    };
   }
 
   componentDidMount() {
-    this.apiRequest()
+    this.apiRequest();
   }
 
-  apiRequest = params => {
-  }
+  apiRequest = async params => {
+    const quesData = await Request.getQuestions();
+    this.setState({
+      data: quesData && quesData.data
+    });
+  };
 
   add = data => {
-    return this.props.addToTest ? this.props.addToTest(data) : null
-  }
+    return this.props.addToTest ? this.props.addToTest(data) : null;
+  };
 
   getWrapperWidth() {
     if (this.wrapper) {
       console.log(
-        'get wrapper width',
-        window.getComputedStyle(this.wrapper).getPropertyValue('width')
-      )
+        "get wrapper width",
+        window.getComputedStyle(this.wrapper).getPropertyValue("width")
+      );
     } else {
-      console.log('get wrapper - no wrapper')
+      console.log("get wrapper - no wrapper");
     }
   }
   onSelectChange = (selectedRowKeys, selectedRows) => {
     this.setState({ selectedRows, selectedRowKeys }, () => {
-      const { selectedRows } = this.state
+      const { selectedRows } = this.state;
       if (selectedRows.length) {
-        this.props.selected(true)
+        this.props.selected(true);
       } else {
-        this.props.selected(false)
+        this.props.selected(false);
       }
-    })
-  }
+    });
+  };
   // handleAddButton = () => {
   //  let x = this.props.add ? this.props.add(this.state.selectedRows) : null
   //  this.setState({
@@ -65,7 +68,7 @@ class QuestionList extends Component {
       <div style={{ padding: 8 }}>
         <Input
           ref={node => {
-            this.searchInput = node
+            this.searchInput = node;
           }}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
@@ -73,26 +76,28 @@ class QuestionList extends Component {
             setSelectedKeys(e.target.value ? [e.target.value] : [])
           }
           onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
-          style={{ width: 188, marginBottom: 8, display: 'block' }}
+          style={{ width: 188, marginBottom: 8, display: "block" }}
         />
         <Button
           type="primary"
           onClick={() => this.handleSearch(selectedKeys, confirm)}
           icon="search"
           size="small"
-          style={{ width: 90, marginRight: 8 }}>
+          style={{ width: 90, marginRight: 8 }}
+        >
           Search
         </Button>
         <Button
           onClick={() => this.handleReset(clearFilters)}
           size="small"
-          style={{ width: 90 }}>
+          style={{ width: 90 }}
+        >
           Reset
         </Button>
       </div>
     ),
     filterIcon: filtered => (
-      <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />
+      <Icon type="search" style={{ color: filtered ? "#1890ff" : undefined }} />
     ),
     onFilter: (value, record) =>
       record[dataIndex]
@@ -101,102 +106,100 @@ class QuestionList extends Component {
         .includes(value.toLowerCase()),
     onFilterDropdownVisibleChange: visible => {
       if (visible) {
-        setTimeout(() => this.searchInput.select())
+        setTimeout(() => this.searchInput.select());
       }
     },
     render: text => (
       <Highlighter
-        highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+        highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
         searchWords={[this.state.searchText]}
         autoEscape
         textToHighlight={text.toString()}
       />
     )
-  })
+  });
 
   handleSearch = (selectedKeys, confirm) => {
-    confirm()
-    this.setState({ searchText: selectedKeys[0] })
-  }
+    confirm();
+    this.setState({ searchText: selectedKeys[0] });
+  };
 
   handleReset = clearFilters => {
-    clearFilters()
-    this.setState({ searchText: '' })
-  }
+    clearFilters();
+    this.setState({ searchText: "" });
+  };
 
   handleInputSearch = e => {
-    const val = e.target.value
+    const val = e.target.value;
     this.setState({
       val: val
-    })
+    });
 
-    let temp = []
+    let temp = [];
     _.each(this.state.data, value => {
       value.topics.findIndex(vall => {
-        if (vall === val) temp.push(value)
-      })
-    })
+        if (vall === val) temp.push(value);
+      });
+    });
     this.setState({
       data2: temp,
       search: true
-    })
-  }
+    });
+  };
   handleInputReset = () => {
     this.setState({
       search: false,
       data2: [],
-      val: ''
-    })
-  }
+      val: ""
+    });
+  };
   handleInputAdd = () => {
-    const { add } = this.props
-    const { data2 } = this.state
-    add(data2)
-  }
+    const { add } = this.props;
+    const { data2 } = this.state;
+    add(data2);
+  };
 
   render() {
-    const { loading, selectedRows, selectedRowKeys, data2 } = this.state
-    const { addButton, selected } = this.props
+    const { loading, selectedRows, selectedRowKeys, data2 } = this.state;
+    const { addButton, selected } = this.props;
     if (addButton) {
-      this.props.add && this.props.add(this.state.selectedRows)
+      this.props.add && this.props.add(this.state.selectedRows);
       this.setState(
         {
           selectedRows: [],
           selectedRowKeys: []
         },
         () => {
-          selected(false)
+          selected(false);
         }
-      )
+      );
     }
 
     const rowSelection = {
       selectedRowKeys,
       selectedRows,
       onChange: this.onSelectChange
-    }
+    };
     const columns = [
       {
-        title: 'Question',
-        key: 'question',
-        dataIndex: 'questionBody',
-        searchTextName: 'question',
+        title: "Question",
+        key: "question",
+        dataIndex: "questionBody",
+        searchTextName: "question",
         render: questionBody => {
-          return (
-            <div>{ReactHtmlParser(questionBody)}</div>
-          )
+          return <div>{ReactHtmlParser(questionBody)}</div>;
         }
-      },
+      }
       // {
       //   title: 'Mcq Type',
       //   dataIndex: 'questionType',
       //   key: 'questionType'
       // },
-    ]
-    const { data, search } = this.state
+    ];
+    const { data, search } = this.state;
     return (
       <Card bordered={true} title="All Questions">
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: "flex" }}>
           <Input
             className={styles.TopicsInput}
             onChange={this.handleInputSearch}
@@ -218,9 +221,8 @@ class QuestionList extends Component {
           pagination={false}
         />
       </Card>
-    )
+    );
   }
 }
 
-
-export default (QuestionList)
+export default QuestionList;

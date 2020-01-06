@@ -31,10 +31,10 @@ class AddQuesToTest extends PureComponent {
     });
   };
 
-  onInstructionChange = (data, check) => {
+  onInstructionChange = data => {
     this.setState(
       {
-        instructions: check ? data : ""
+        instructions: data
       },
       () => {
         // console.log('instructionChange', this.state)
@@ -55,10 +55,10 @@ class AddQuesToTest extends PureComponent {
             let body = {};
             form.validateFieldsAndScroll(async (err, valData) => {
               valData.isOnline = this.state.isOnline;
-              console.log(valData);
+              console.log(valData, "VALLLLS");
               body = { ...valData };
             });
-            const { newQuesData, _id } = this.state;
+            const { newQuesData } = this.state;
             newQuesData.map((item, key) => {
               newQuesData[key].qid = item.qid;
             });
@@ -67,7 +67,9 @@ class AddQuesToTest extends PureComponent {
               questions: newQuesData,
               description: this.state.instructions
             };
-            const x = await Request.editTest(_id, body);
+            
+            const x = await Request.addQuiz(body);
+            console.log(body,x, "BODY");
             if (!x.error) {
               notification.success({
                 message: x.message
@@ -304,7 +306,7 @@ class AddQuesToTest extends PureComponent {
           </Card>
           <FormItem
             inputType={"BUTTON"}
-            title={"Save and Next"}
+            title={"Add Test"}
             type={"primary"}
             onClick={this.handleSubmit}
             loading={submitButton}
@@ -315,7 +317,7 @@ class AddQuesToTest extends PureComponent {
     return (
       <>
         <div className={styles.type}>
-          <p>{`Create Questions`} </p>
+          <p>{`Create Quiz`} </p>
         </div>
         {comp}
       </>

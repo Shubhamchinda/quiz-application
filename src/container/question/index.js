@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Card, Icon, Button, Checkbox, Radio, Form } from "antd";
-import capitalize from "capitalize";
+import { Card, Icon, Button, Radio, Form } from "antd";
+// import capitalize from "capitalize";
 import _ from "lodash";
 
 import Draft from "./../../components/draft";
@@ -14,7 +14,6 @@ import { notification } from "antd/lib";
 class Question extends Component {
   state = {
     number: [1, 2],
-    type: this.props.type,
     answersL: [],
     loading: false
   };
@@ -49,30 +48,6 @@ class Question extends Component {
     });
   };
 
-  // manage answers on multiple type mcq
-  onChangeCheck = (e, key) => {
-    const { type, answersL, number } = this.state;
-    let temp = [];
-    if (
-      type === "Multiple" &&
-      answersL.length <= number.length &&
-      e.target.checked &&
-      !answersL.includes(key)
-    ) {
-      temp.push(key);
-      this.setState({
-        answersL: [...answersL, ...temp]
-      });
-    } else if (!e.target.checked) {
-      temp = [...answersL];
-      const index = temp.indexOf(key);
-      temp.splice(index, 1);
-      this.setState({
-        answersL: temp
-      });
-    }
-  };
-
   // manage single type mcq answer selection
   onChange = e => {
     let obj = {
@@ -85,8 +60,6 @@ class Question extends Component {
 
   // take ques draft input
   onQuesChange = data => {
-    console.log(data);
-
     this.setState({
       ques: data,
       reset: false
@@ -137,6 +110,7 @@ class Question extends Component {
     }
 
     form.validateFieldsAndScroll(async (err, valData) => {
+      console.log(valData)
       if (!err) {
         let answers = [];
         _.forEach(number, val => {
@@ -156,11 +130,11 @@ class Question extends Component {
             data = {
               answers: answers,
               questionBody: newQues,
-              questionType: type,
               solution: sol
             };
-
             const resp = await Request.addQuestion(data);
+            console.log(resp,"RESPP")
+
             this.setState({ loading: false });
 
             if (!resp.error) {
@@ -187,7 +161,7 @@ class Question extends Component {
   };
 
   render() {
-    const { number, type, answersL, reset, loading, key } = this.state;
+    const { number, loading, key } = this.state;
 
     const answers = number.map(key => {
       const deleteEnable =
@@ -196,23 +170,13 @@ class Question extends Component {
             <Icon type="delete" />
           </Button>
         ) : null;
-      const checkType =
-        type === "Single" ? (
-          <>
-            <Radio id={"answerSelect"} key={key} value={key}>
-              Select as answer
-            </Radio>
-          </>
-        ) : (
-          <Checkbox
-            id={"answerSelect"}
-            checked={answersL.includes(key)}
-            key={key}
-            onChange={e => this.onChangeCheck(e, key)}
-          >
+      const checkType = (
+        <>
+          <Radio id={"answerSelect"} key={key} value={key}>
             Select as answer
-          </Checkbox>
-        );
+          </Radio>
+        </>
+      );
       return (
         <Card
           title={`Answer-${key} :`}
@@ -241,23 +205,17 @@ class Question extends Component {
         More <Icon type="plus" />
       </Button>
     );
-    const ansDiv =
-      type === "Single" ? (
-        <Radio.Group
-          id={"answers"}
-          className={styles.Answers}
-          value={key}
-          onChange={e => this.onChange(e, key)}
-        >
-          {answers}
-          {more}
-        </Radio.Group>
-      ) : (
-        <div className={styles.Answers}>
-          {answers}
-          {more}
-        </div>
-      );
+    const ansDiv = (
+      <Radio.Group
+        id={"answers"}
+        className={styles.Answers}
+        value={key}
+        onChange={e => this.onChange(e, key)}
+      >
+        {answers}
+        {more}
+      </Radio.Group>
+    );
     return (
       <>
         <Form onSubmit={this.handleSubmit}>

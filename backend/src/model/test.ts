@@ -1,31 +1,50 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
+
+import { Question as questions } from "./question";
 
 export type TestDocument = mongoose.Document & {
-    testName: String,
-    questionMargin: Boolean,
-    questions: String[] ,
-    passingMarks: Number,
-    totalMarks: Number,
-    duration: String,
-    description: String,
-    testNumber: Number,
-    answerFiles: Array<String>,
-    timeStamp: Date
-}
+  testName: String;
+  questionMargin: Boolean;
+  questions: any;
+  passingMarks: Number;
+  totalMarks: Number;
+  duration: String;
+  description: String;
+  testNumber: Number;
+  answerFiles: Array<String>;
+  timeStamp: Date;
+};
 
 const testSchema = new mongoose.Schema({
-
-    testName: String,
-    questionMargin: { type: Boolean, default: false },
-    passingMarks: Number,
-    totalMarks: Number,
-    duration: String,
-    description: String,
-    questions: [{type: String, ref:'testQuestions'}],
-    testNumber: String,
-    setFiles: Array,
-    answerFiles: Array,
-    timeStamp: {type: Date, default: Date.now}
+  testName: String,
+  questionMargin: { type: Boolean, default: false },
+  passingMarks: Number,
+  totalMarks: Number,
+  duration: String,
+  description: String,
+  questions: [
+    {
+      questionBody: String,
+      solution: String,
+      answers: [
+        {
+          answer: String,
+          correctAnswer: Boolean
+        }
+      ],
+      matchQuestions: [
+        {
+          question: String,
+          answer: String,
+          match: String
+        }
+      ]
+    }
+  ],
+  testNumber: String,
+  setFiles: Array,
+  answerFiles: Array,
+  timeStamp: { type: Date, default: Date.now }
 });
 
-export const Test = mongoose.model<TestDocument>('tests', testSchema);
+export const Test = mongoose.model<TestDocument>("tests", testSchema);
