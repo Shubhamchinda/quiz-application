@@ -68,7 +68,7 @@ class Question extends React.Component {
   };
 
   render() {
-    const { type, body, loading, answers, key, status } = this.state;
+    const { type, body, loading, answers, key } = this.state;
     let comp = <p>Loading</p>;
     const ans =
       answers &&
@@ -82,7 +82,7 @@ class Question extends React.Component {
         );
         return (
           key && (
-            <Card
+            <Card className={styles.AnswersOption}
               title={`Option-${i + 1} :`}
               key={i}
               id={i}
@@ -108,7 +108,7 @@ class Question extends React.Component {
     if (!loading) {
       comp = (
         <>
-          <h1>Question type : {type && type}</h1>
+          <h1>Question type : MCQ</h1>
           {ReactHtmlParser(body && body)}
           <div>{ansDiv}</div>
         </>

@@ -192,7 +192,7 @@ class onlineTest extends React.Component {
     let comp = <p>Loading...</p>;
     if (ques && ques) {
       comp = (
-        <Card>
+        <Card >
           <p>Section</p>
           {ques && (
             <Question
@@ -231,7 +231,7 @@ class onlineTest extends React.Component {
     return (
       <>
         <div className={styles.QuesAndStatus}>
-          <div>
+          <div className={styles.AnswersCard}>
             {comp}
             {buttons}
           </div>
