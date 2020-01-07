@@ -33,7 +33,7 @@ class onlineTest extends React.Component {
           testId: url
         };
         // const x = await Request.submitTest(tempData);
-        console.log( "SUMIT");
+        console.log( tempData, "SUMIT");
       }
     );
   }
@@ -68,7 +68,7 @@ class onlineTest extends React.Component {
             answers: newArr
           }
         };
-        const res = await Request.submitTest(tempData);
+        // const res = await Request.submitTest(tempData);
       }
     );
   };

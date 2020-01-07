@@ -39,7 +39,7 @@ class Instructions extends React.Component {
     let url = window.location.pathname.split("/").pop();
     // let url = this.props.history.location.url;
 
-    let data2 = await Request.getQuizById("5e142e26f750d43044014fca");
+    let data2 = await Request.getQuizById(url);
     console.log(data2);
 
     this.setState({
@@ -90,7 +90,7 @@ class Instructions extends React.Component {
     return (
       <>
         <Card loading={loading}>
-          {data2.testName ? (
+          {data2 && data2.testName ? (
             <h1 style={{ textAlign: "center", fontSize: "25px" }}>
               {capitalize(data2.testName)}
             </h1>
@@ -107,7 +107,7 @@ class Instructions extends React.Component {
                   >
                     <h3>Total Marks</h3>
                     <hr />
-                    {data2.totalMarks}
+                    {data2 && data2.totalMarks}
                   </Card>
                 </Col>
                 <Col span={8}>
@@ -118,7 +118,7 @@ class Instructions extends React.Component {
                   >
                     <h3>Passing Marks</h3>
                     <hr />
-                    {data2.passingMarks}
+                    {data2 && data2.passingMarks}
                   </Card>
                 </Col>
                 <Col span={8}>
@@ -129,7 +129,7 @@ class Instructions extends React.Component {
                   >
                     <h3>Duration</h3>
                     <hr />
-                    {data2.duration}
+                    {data2 && data2.duration}
                   </Card>
                 </Col>
               </Row>
@@ -140,7 +140,7 @@ class Instructions extends React.Component {
           <h1 style={{ textAlign: "center", fontSize: "20px" }}>
             Instructions
           </h1>
-          <p>{data2.description ? HtmlParser(data2.description) : null}</p>
+          <p>{data2 && data2.description ? HtmlParser(data2.description) : null}</p>
           <br />
           <Card
             style={{ width: "50%", margin: "0 auto", padding: "0px" }}
