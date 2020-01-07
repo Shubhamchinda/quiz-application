@@ -7,6 +7,7 @@ import Question from "../container/question";
 import Quiz from "../container/quiz/addQuestion";
 import AllQuizzes from "../container/quiz/all";
 import QuizInstruction from "../container/quizLive/instructions";
+import QuizLive from "../container/quizLive";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -78,7 +79,7 @@ const SiderDemo = props => {
             exact
             component={() => <QuizInstruction />}
           />
-          <Route path="/quiz/:_id" exact component={() => <h1>QUIZZES!</h1>} />
+          <Route path="/quiz/:_id" exact component={() => <QuizLive />} />
         </Content>
         <Footer style={{ textAlign: "center" }}>Ant Design ©2018</Footer>
       </Layout>

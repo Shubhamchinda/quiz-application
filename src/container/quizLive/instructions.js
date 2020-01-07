@@ -1,13 +1,14 @@
 import React from "react";
-import { Button, Card, Row, Col } from "antd";
-import { withRouter } from 'react-router-dom'
+import { Button, Card, Row, Col, Form } from "antd";
+import { withRouter } from "react-router-dom";
 import _ from "lodash";
 import Request from "../../request";
 import capitalize from "capitalize";
 
 import HtmlParser from "react-html-parser";
-import Countdown from "react-countdown-now";
+import FormItem from "../../components/FormItem";
 
+@Form.create()
 class Instructions extends React.Component {
   tempData = [];
   state = {
@@ -27,23 +28,26 @@ class Instructions extends React.Component {
     this.apiRequest();
   }
   handleSubmit = () => {
+    
+    this.props.history.push(`/quiz/${this.state.id}`);
     // Request.submitTest({ id: this.state.id })
   };
 
   apiRequest = async (params = {}) => {
     this.setState({ loading: true });
-    console.log(this.props)
+    console.log(this.props);
+    let url = window.location.pathname.split("/").pop();
     // let url = this.props.history.location.url;
 
-    // let data2 = await Request.getTest("5e142e26f750d43044014fca");
-    // console.log(data2);
+    let data2 = await Request.getQuizById("5e142e26f750d43044014fca");
+    console.log(data2);
 
     this.setState({
-      id: "5e142e26f750d43044014fca",
+      id: url,
       tableLoading: false,
       loading: false,
-      // data2: data2.data,
-      // duration: parseInt(data2.data && data2.data.duration)
+      data2: data2.data,
+      duration: parseInt(data2.data && data2.data.duration)
     });
   };
   gridStyle = {
@@ -55,8 +59,33 @@ class Instructions extends React.Component {
       key: false
     });
   };
+
+  handleStudName = e => {
+    if (e) {
+      this.setState({
+        key: false,
+        studName : e
+      });
+    } else {
+      this.setState({
+        key: true
+      });
+    }
+  };
   render() {
-    const { duration, data2 } = this.state;
+    const validateRule = {
+      rules: [{ required: true, message: "Required field" }]
+    };
+    const {
+      form: { getFieldDecorator }
+    } = this.props;
+
+    const fIAll = {
+      getFieldDecorator,
+      validateRule
+    };
+
+    const { duration, data2 , studName} = this.state;
     const { loading, key } = this.state;
     return (
       <>
@@ -117,25 +146,19 @@ class Instructions extends React.Component {
             style={{ width: "50%", margin: "0 auto", padding: "0px" }}
             bordered={false}
           >
-            {key && (
-              <div style={{ textAlign: "center", fontSize: "x-large" }}>
-                <Countdown
-                  style={{}}
-                  date={Date.now() + 5000}
-                  onComplete={() => this.renderButton()}
-                  precision={3}
-                  daysInHours={true}
-                  total
-                />
-              </div>
-            )}
+            <FormItem
+              {...fIAll}
+              label={"Student Name"}
+              name={"studentName"}
+              onChange={e => this.handleStudName(e)}
+            />
             <br />
             <Button
               type="primary"
               block
               style={{}}
-              disabled={key}
               onClick={this.handleSubmit}
+              disabled={key}
             >
               Start Test
             </Button>

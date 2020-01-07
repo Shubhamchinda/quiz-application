@@ -15,11 +15,11 @@ class onlineTest extends React.Component {
     count: []
   };
   async componentDidMount() {
-    let url = this.props.history.location.url;
+    let url = window.location.pathname.split("/").pop();
     this.setState({
-      url: url.id
+      url: url
     });
-    const data = await Request.getTest(url.id);
+    const data = await Request.getQuizById(url);
     const questions =
       data && data.data.sets && data.data.sets[0] && data.data.sets[0].sequence;
     this.setState(
@@ -33,7 +33,7 @@ class onlineTest extends React.Component {
           testId: url
         };
         // const x = await Request.submitTest(tempData);
-        // console.log(x, "SUMIT");
+        console.log( "SUMIT");
       }
     );
   }
