@@ -28,8 +28,12 @@ class Instructions extends React.Component {
     this.apiRequest();
   }
   handleSubmit = () => {
-    
-    this.props.history.push(`/quiz/${this.state.id}`);
+    const { studName } = this.state;
+    console.log(studName);
+    this.props.history.push({
+      pathname: `/quiz/${this.state.id}`,
+      name: studName
+    });
     // Request.submitTest({ id: this.state.id })
   };
 
@@ -64,7 +68,7 @@ class Instructions extends React.Component {
     if (e) {
       this.setState({
         key: false,
-        studName : e
+        studName: e.target.value
       });
     } else {
       this.setState({
@@ -85,7 +89,7 @@ class Instructions extends React.Component {
       validateRule
     };
 
-    const { duration, data2 , studName} = this.state;
+    const { duration, data2, studName } = this.state;
     const { loading, key } = this.state;
     return (
       <>
@@ -140,7 +144,9 @@ class Instructions extends React.Component {
           <h1 style={{ textAlign: "center", fontSize: "20px" }}>
             Instructions
           </h1>
-          <p>{data2 && data2.description ? HtmlParser(data2.description) : null}</p>
+          <p>
+            {data2 && data2.description ? HtmlParser(data2.description) : null}
+          </p>
           <br />
           <Card
             style={{ width: "50%", margin: "0 auto", padding: "0px" }}

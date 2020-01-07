@@ -3,6 +3,7 @@ import { Button, Card } from "antd";
 import _ from "lodash";
 import Request from "../../request";
 import Question from "./question";
+import {withRouter} from "react-router-dom";
 
 import QuestionStatus from "./questionStatus";
 import styles from "./styles.less";
@@ -15,7 +16,11 @@ class onlineTest extends React.Component {
     count: []
   };
   async componentDidMount() {
+   console.log(this.props)
     let url = window.location.pathname.split("/").pop();
+    if(this.props.location.name === undefined){
+      this.props.history.push(`/`)
+    }
     this.setState({
       url: url
     });
@@ -247,4 +252,4 @@ class onlineTest extends React.Component {
 }
 
 
-export default onlineTest;
+export default withRouter(onlineTest);

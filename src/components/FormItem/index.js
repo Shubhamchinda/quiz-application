@@ -178,7 +178,6 @@ export default class FormItem extends PureComponent {
             placeholder={placeholder || _.startCase(name) || label}
             readOnly={readonly && readonly}
             onChange={onChange}
-            value={value}
           />
         );
     }
