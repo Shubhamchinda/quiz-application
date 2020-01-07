@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 // import PageHeaderWrapper from "../../../components/PageHeaderWrapper";
 import { Form, Select, Card, Button, Spin, notification } from "antd";
 import _ from "lodash";
+import Async from 'async'
 // import { notification } from "antd/lib/index";
 import Request from "../../../request";
 import { stateFromHTML } from "draft-js-import-html";
@@ -21,7 +22,8 @@ class AddQuesToTest extends PureComponent {
     newQuesData: [],
     addButton: false,
     edit: false,
-    data: []
+    data: [],
+    marksTotal: 0
   };
 
   submitWithMarks = data => {
@@ -67,7 +69,14 @@ class AddQuesToTest extends PureComponent {
               questions: newQuesData,
               description: this.state.instructions
             };
-
+            // console.log(newQuesData)
+            // let totalMarks = 0
+            // Async.forEach(newQuesData, (val)=>{
+            //   totalMarks = totalMarks + val.marks
+            // })
+            // this.setState({
+            //   marksTotal : totalMarks
+            // })
             const x = await Request.addQuiz(body);
             console.log(body, x, "BODY");
             if (!x.error) {
@@ -194,7 +203,8 @@ class AddQuesToTest extends PureComponent {
       submitButton,
       removeButton,
       selected,
-      rSelected
+      rSelected,
+      marksTotal
     } = this.state;
     const {
       form: { getFieldDecorator, getFieldValue }
@@ -248,6 +258,7 @@ class AddQuesToTest extends PureComponent {
                     inputType={"NUMBER"}
                     label={"Total Marks"}
                     name={"totalMarks"}
+                    value={marksTotal}
                   />
                 </Card>
                 <Card title={"Quiz Descriptions :"} className={styles.CardForm}>
