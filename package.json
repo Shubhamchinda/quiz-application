@@ -16,6 +16,7 @@
     "draft-js-plugins-editor": "^3.0.0",
     "draft-js-static-toolbar-plugin": "^3.0.1",
     "react": "^16.11.0",
+    "react-countdown-now": "^2.1.2",
     "react-dom": "^16.11.0",
     "react-highlight-words": "^0.16.0",
     "react-html-parser": "^2.0.2",

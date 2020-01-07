@@ -135,8 +135,8 @@ class AllTest extends Component {
   };
   startTest = record => {
     this.props.history.push({
-      pathname: `quiz/${record._id}`,
-      url: record._id
+      pathname: `quiz/instructions/${record._id}`,
+      url: "record._id"
     });
   };
   render() {

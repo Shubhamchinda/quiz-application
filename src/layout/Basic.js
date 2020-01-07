@@ -6,7 +6,7 @@ import ContentComp from "../container/content";
 import Question from "../container/question";
 import Quiz from "../container/quiz/addQuestion";
 import AllQuizzes from "../container/quiz/all";
-
+import QuizInstruction from "../container/quizLive/instructions";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -47,21 +47,21 @@ const SiderDemo = props => {
             </Link>
           </Menu.Item>
           <Menu.Item key={"question"}>
-          <Link to="/question">
-            <Icon type="pie-chart" />
-            <span>Create Questions</span>
+            <Link to="/question">
+              <Icon type="pie-chart" />
+              <span>Create Questions</span>
             </Link>
           </Menu.Item>
           <Menu.Item key={"quiz"}>
-          <Link to="/quiz">
-            <Icon type="desktop" />
-            <span>Create Quiz</span>
+            <Link to="/quiz">
+              <Icon type="desktop" />
+              <span>Create Quiz</span>
             </Link>
           </Menu.Item>
           <Menu.Item key={"all-quiz"}>
-          <Link to="/all-quiz">
-            <Icon type="desktop" />
-            <span>All Quizzes</span>
+            <Link to="/all-quiz">
+              <Icon type="desktop" />
+              <span>All Quizzes</span>
             </Link>
           </Menu.Item>
         </Menu>
@@ -73,6 +73,11 @@ const SiderDemo = props => {
           <Route path="/question" exact component={() => <Question />} />
           <Route path="/quiz" exact component={() => <Quiz />} />
           <Route path="/all-quiz" exact component={() => <AllQuizzes />} />
+          <Route
+            path="/quiz/instructions/:id"
+            exact
+            component={() => <QuizInstruction />}
+          />
           <Route path="/quiz/:_id" exact component={() => <h1>QUIZZES!</h1>} />
         </Content>
         <Footer style={{ textAlign: "center" }}>Ant Design ©2018</Footer>

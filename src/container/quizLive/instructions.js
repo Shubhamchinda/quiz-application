@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Card, Row, Col } from "antd";
+import { withRouter } from 'react-router-dom'
 import _ from "lodash";
 import Request from "../../request";
 import capitalize from "capitalize";
@@ -7,7 +8,7 @@ import capitalize from "capitalize";
 import HtmlParser from "react-html-parser";
 import Countdown from "react-countdown-now";
 
-class profile extends React.Component {
+class Instructions extends React.Component {
   tempData = [];
   state = {
     loading: false,
@@ -31,17 +32,18 @@ class profile extends React.Component {
 
   apiRequest = async (params = {}) => {
     this.setState({ loading: true });
-    let url = this.props.history.location.url;
+    console.log(this.props)
+    // let url = this.props.history.location.url;
 
-    let data2 = await Request.getTest(url);
-    console.log(data2);
+    // let data2 = await Request.getTest("5e142e26f750d43044014fca");
+    // console.log(data2);
 
     this.setState({
-      id: url,
+      id: "5e142e26f750d43044014fca",
       tableLoading: false,
       loading: false,
-      data2: data2.data,
-      duration: parseInt(data2.data && data2.data.duration)
+      // data2: data2.data,
+      // duration: parseInt(data2.data && data2.data.duration)
     });
   };
   gridStyle = {
@@ -144,4 +146,4 @@ class profile extends React.Component {
   }
 }
 
-export default profile;
+export default withRouter(Instructions);
