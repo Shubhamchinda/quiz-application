@@ -3,7 +3,7 @@ import { Button, Card } from "antd";
 import _ from "lodash";
 import Request from "../../request";
 import Question from "./question";
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import QuestionStatus from "./questionStatus";
 import styles from "./styles.less";
@@ -16,17 +16,17 @@ class onlineTest extends React.Component {
     count: []
   };
   async componentDidMount() {
-   console.log(this.props)
+    console.log(this.props);
     let url = window.location.pathname.split("/").pop();
-    if(this.props.location.name === undefined){
-      this.props.history.push(`/`)
+    if (this.props.location.name === undefined) {
+      this.props.history.push(`/`);
     }
     this.setState({
       url: url
     });
     const data = await Request.getQuizById(url);
-    const questions =
-      data && data.data.sets && data.data.sets[0] && data.data.sets[0].sequence;
+    console.log(data);
+    const questions = data && data.data && data.data.questions;
     this.setState(
       {
         data: data.data,
@@ -38,7 +38,7 @@ class onlineTest extends React.Component {
           testId: url
         };
         // const x = await Request.submitTest(tempData);
-        console.log( tempData, "SUMIT");
+        console.log(tempData, "SUMIT");
       }
     );
   }
@@ -86,12 +86,18 @@ class onlineTest extends React.Component {
   };
 
   handleSubmit = async () => {
-    const { value, quesArray } = this.state;
-    let newArr = quesArray.map(data => {
+    const { data, quesArray, questions } = this.state;
+    let newArr = quesArray.map((data, index) => {
+      // console.log(data, questions[index], "INDEX");
+      let t = data.markedOption[0].charCodeAt(0) - 97;
+      let flag = false;
+      if (questions[index].answers[t].correctAnswer) {
+        flag = true;
+      }
       return {
         markedOption: data.markedOption,
-        isCorrect: false,
-        marks: data.marks
+        isCorrect: flag,
+        marks: flag ? data.marks : 0
       };
     });
     let tempData = {
@@ -100,10 +106,27 @@ class onlineTest extends React.Component {
         answers: newArr
       }
     };
-    console.log(tempData,quesArray, "ASDSADAasdsadas");
-    // const res = await Request.submitTest(tempData);
-    // console.log(res, "NEXTTTt");
-    // alert("SUBMIT");
+
+    let result = 0;
+    _.each(newArr, val => {
+      result += val.marks;
+    });
+    // console.log(tempData, quesArray, result,  "ASDSADAasdsadas");
+    let subData = {
+      qid: this.state.url,
+      result: {
+        name: this.props.location.name,
+        obtainedMarks: result,
+        answers: newArr
+      },
+      totalMarks: data.totalMarks
+    };
+    // let resp = Request.addResult(subData);
+    // console.log(resp, "NEXTTTt");
+    alert(`
+      Obtained Marks : ${result}
+      Total Marks : ${data.totalMarks}
+    `)
   };
 
   handleQuesChange = key => {
@@ -181,7 +204,7 @@ class onlineTest extends React.Component {
   };
 
   render() {
-    const { questions, data, value, quesArray, count } = this.state;
+    const { data, value, quesArray, count } = this.state;
     const q = data && data.questions;
     const ques = this.getCurrentQuestion();
     const status =
@@ -191,7 +214,7 @@ class onlineTest extends React.Component {
     let comp = <p>Loading...</p>;
     if (ques && ques) {
       comp = (
-        <Card >
+        <Card>
           <p>Section</p>
           {ques && (
             <Question
@@ -249,6 +272,5 @@ class onlineTest extends React.Component {
     );
   }
 }
-
 
 export default withRouter(onlineTest);

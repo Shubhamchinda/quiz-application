@@ -78,5 +78,19 @@ class Request {
         });
     });
   }
+
+  addResult(data) {
+    return new Promise((next, error) => {
+      authAxios
+        .post(`/result`, data)
+        .then(d => {
+          next(d.data);
+        })
+        .catch(err => {
+          next({ error: true, err });
+          error(err);
+        });
+    });
+  }
 }
 export default new Request();

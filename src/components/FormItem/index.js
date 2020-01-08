@@ -164,6 +164,7 @@ export default class FormItem extends PureComponent {
             htmlType={htmlType && htmlType}
             loading={loading && loading}
             onClick={onClick}
+            disabled= {disabled && disabled}
           >
             {title}
           </Button>

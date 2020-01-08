@@ -18,7 +18,9 @@ const app = express();
 
 console.log(process.env.MONGO_URI)
 mongoose
-    .connect(process.env.MONGO_URI || MONGODB_URI, {useNewUrlParser: true})
+    .connect(
+      // process.env.MONGO_URI || 
+      MONGODB_URI, {useNewUrlParser: true})
     .then(() => {
       console.log("MongoDB connected!")
     })

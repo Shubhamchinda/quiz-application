@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 
 import quesCtrl from "../controller/question";
 import testCtrl from "../controller/test";
+import resultCtrl from "../controller/results";
 
 const app = Router();
 
@@ -38,6 +39,15 @@ app
     const resp = await testCtrl.get(_id);
     res.json(resp);
 });
+
+app
+  .route("/result")
+  .post(async (req: Request, res: Response) => {
+    const { body } = req;
+    const resp = await resultCtrl.add(body);
+    res.json(resp);
+  })
+
 
 
 export default app

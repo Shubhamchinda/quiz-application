@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 // import PageHeaderWrapper from "../../../components/PageHeaderWrapper";
 import { Form, Select, Card, Button, Spin, notification } from "antd";
 import _ from "lodash";
-import Async from 'async'
+import Async from "async";
 // import { notification } from "antd/lib/index";
 import Request from "../../../request";
 import { stateFromHTML } from "draft-js-import-html";
@@ -204,7 +204,8 @@ class AddQuesToTest extends PureComponent {
       removeButton,
       selected,
       rSelected,
-      marksTotal
+      marksTotal,
+      quesArray
     } = this.state;
     const {
       form: { getFieldDecorator, getFieldValue }
@@ -321,6 +322,7 @@ class AddQuesToTest extends PureComponent {
             type={"primary"}
             onClick={this.handleSubmit}
             loading={submitButton}
+            disabled={newQuesData.length === 0}
           />
         </>
       );

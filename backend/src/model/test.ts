@@ -26,17 +26,11 @@ const testSchema = new mongoose.Schema({
     {
       questionBody: String,
       solution: String,
+      marks: Number,
       answers: [
         {
           answer: String,
           correctAnswer: Boolean
-        }
-      ],
-      matchQuestions: [
-        {
-          question: String,
-          answer: String,
-          match: String
         }
       ]
     }
