@@ -37,7 +37,7 @@ const SiderDemo = props => {
         <div className="logo" />
         <Menu
           theme="dark"
-          defaultSelectedKeys={["dashboard"]}
+          defaultSelectedKeys={[window.location.pathname.split('/').pop() || 'dashboard']}
           mode="inline"
           // onSelect={handleRoute}
         >

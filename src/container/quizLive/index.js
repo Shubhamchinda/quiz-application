@@ -86,10 +86,9 @@ class onlineTest extends React.Component {
   };
 
   handleSubmit = async () => {
-    const { value } = this.state;
-    let newArr = this.state.quesArray.map(data => {
+    const { value, quesArray } = this.state;
+    let newArr = quesArray.map(data => {
       return {
-        qid: data.qid,
         markedOption: data.markedOption,
         isCorrect: false,
         marks: data.marks
@@ -101,7 +100,7 @@ class onlineTest extends React.Component {
         answers: newArr
       }
     };
-    console.log(tempData, "ASDSADAasdsadas");
+    console.log(tempData,quesArray, "ASDSADAasdsadas");
     // const res = await Request.submitTest(tempData);
     // console.log(res, "NEXTTTt");
     // alert("SUBMIT");

@@ -6,21 +6,23 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 
 
-// import {MONGODB_URI, SESSION_SECRET} from "./util/secrets";
+import {MONGODB_URI} from "./config/_utils";
 
 
 import api from "./api/routes";
 
 const rejectFolders: string[] = [];
+const dotenv = require('dotenv').config()
 
 const app = express();
 
+console.log(process.env.MONGO_URI)
 mongoose
-    .connect("mongodb://localhost:27017/quiz-app", {useNewUrlParser: true})
+    .connect(process.env.MONGO_URI || MONGODB_URI, {useNewUrlParser: true})
     .then(() => {
       console.log("MongoDB connected!")
     })
-    .catch(err => {
+    .catch((err : any) => {
         console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
         // process.exit();
     });
