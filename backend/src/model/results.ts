@@ -13,7 +13,7 @@ const resultsSchema = new mongoose.Schema({
       name: String,
       totalMarks: Number,
       answers: [{
-        markedOption: String,
+        markedOption: [{type :String}],
         isCorrect: Boolean,
         marks : Number,
       }],

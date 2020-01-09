@@ -8,6 +8,7 @@ import Quiz from "../container/quiz/addQuestion";
 import AllQuizzes from "../container/quiz/all";
 import QuizInstruction from "../container/quizLive/instructions";
 import QuizLive from "../container/quizLive";
+import Result from "../container/result";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -73,6 +74,7 @@ const SiderDemo = props => {
           <Route path="/" exact component={() => <p>This is a dashboard</p>} />
           <Route path="/question" exact component={() => <Question />} />
           <Route path="/quiz" exact component={() => <Quiz />} />
+          <Route path="/result" exact component={() => <Result />} />
           <Route path="/all-quiz" exact component={() => <AllQuizzes />} />
           <Route
             path="/quiz/instructions/:id"

@@ -5,6 +5,8 @@ import Request from "../../request";
 import Question from "./question";
 import { withRouter } from "react-router-dom";
 
+import TimerComp from "../../components/timer";
+
 import QuestionStatus from "./questionStatus";
 import styles from "./styles.less";
 
@@ -13,10 +15,10 @@ class onlineTest extends React.Component {
     data: null,
     value: 0,
     quesArray: [],
-    count: []
+    count: [],
+    submitFlag: false
   };
   async componentDidMount() {
-    console.log(this.props);
     let url = window.location.pathname.split("/").pop();
     if (this.props.location.name === undefined) {
       this.props.history.push(`/`);
@@ -25,20 +27,18 @@ class onlineTest extends React.Component {
       url: url
     });
     const data = await Request.getQuizById(url);
-    console.log(data);
     const questions = data && data.data && data.data.questions;
     this.setState(
       {
         data: data.data,
-        questions: questions
+        questions: questions,
+        duration: questions && data.data.duration
       },
       async () => {
-        console.log(this.state, "STATREE", data);
         let tempData = {
           testId: url
         };
         // const x = await Request.submitTest(tempData);
-        console.log(tempData, "SUMIT");
       }
     );
   }
@@ -86,6 +86,9 @@ class onlineTest extends React.Component {
   };
 
   handleSubmit = async () => {
+    this.setState({
+      submitFlag: true
+    });
     const { data, quesArray, questions } = this.state;
     let newArr = quesArray.map((data, index) => {
       // console.log(data, questions[index], "INDEX");
@@ -121,12 +124,17 @@ class onlineTest extends React.Component {
       },
       totalMarks: data.totalMarks
     };
-    // let resp = Request.addResult(subData);
-    // console.log(resp, "NEXTTTt");
-    alert(`
-      Obtained Marks : ${result}
-      Total Marks : ${data.totalMarks}
-    `)
+    let resp = Request.addResult(subData);
+    if (!resp.error) {
+      this.props.history.push({
+        pathname: "/result",
+        student: {
+          name: this.props.location.name,
+          obtainedMarks: result,
+          totalMarks: data.totalMarks
+        }
+      });
+    }
   };
 
   handleQuesChange = key => {
@@ -154,7 +162,6 @@ class onlineTest extends React.Component {
         tempKey.splice(index, 1);
       }
     }
-    console.log(value, key, "KKKK");
 
     let temp = {};
     if (singleMcq) {
@@ -203,8 +210,15 @@ class onlineTest extends React.Component {
     return data && data.questions && data.questions[value];
   };
 
+  handleSpentDuration = val => {
+    console.log(val, "SPENT");
+    // this.setState({
+    //   spentDuration : val
+    // })
+  };
+
   render() {
-    const { data, value, quesArray, count } = this.state;
+    const { data, value, quesArray, count, duration, submitFlag } = this.state;
     const q = data && data.questions;
     const ques = this.getCurrentQuestion();
     const status =
@@ -233,12 +247,12 @@ class onlineTest extends React.Component {
         <Button disabled={value == 0} onClick={this.handlePrevButton}>
           Previous
         </Button>
-        <Button
+        {/* <Button
           disabled={q && q.length && value > q.length - 2}
           onClick={this.handleSkipButton}
         >
           Skip
-        </Button>
+        </Button> */}
         <Button
           disabled={q && q.length && value > q.length - 2}
           onClick={this.handleNextButton}
@@ -252,6 +266,13 @@ class onlineTest extends React.Component {
     );
     return (
       <>
+        {duration && (
+          <TimerComp
+            duration={duration && parseInt(duration)}
+            submit={submitFlag}
+            onSubmit={data => this.handleSpentDuration(data)}
+          />
+        )}{" "}
         <div className={styles.QuesAndStatus}>
           <div className={styles.AnswersCard}>
             {comp}

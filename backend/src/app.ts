@@ -42,6 +42,7 @@ app.use(express.json()); //middleware
 app.get("/", (req, res) => {
   res.send("Hello");
 });
+mongoose.set("debug", true);
 
 app.use("/api", api);
 
