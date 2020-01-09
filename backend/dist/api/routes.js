@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const question_1 = __importDefault(require("../controller/question"));
 const test_1 = __importDefault(require("../controller/test"));
+const results_1 = __importDefault(require("../controller/results"));
 const app = express_1.Router();
 app
     .route("/question")
@@ -24,26 +25,33 @@ app
     res.json(resp);
 }))
     .get((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("asdaasda");
     const resp = yield question_1.default.all(req.query);
     res.json(resp);
 }));
 app
-    .route("/test")
+    .route("/quiz")
     .post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
-    // const resp = await quesCtrl.add(body)
     const resp = yield test_1.default.add(body);
     res.json(resp);
 }))
     .get((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // const resp = await quesCtrl.all()
     const resp = yield test_1.default.all(req.query);
     res.json(resp);
 }));
 app
-    .route("/test/:_id")
+    .route("/quiz/:_id")
     .get((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { _id } = req.params;
     const resp = yield test_1.default.get(_id);
     res.json(resp);
 }));
+app
+    .route("/result")
+    .post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { body } = req;
+    const resp = yield results_1.default.add(body);
+    res.json(resp);
+}));
+exports.default = app;

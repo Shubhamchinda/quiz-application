@@ -22,19 +22,10 @@ const testCtrl = {
         return new Promise((resolve) => __awaiter(void 0, void 0, void 0, function* () {
             let questions = [];
             let test = new test_1.Test();
+            //@ts-ignore
             lodash_1.default.each(data, (value, key) => {
                 test[key] = value;
             });
-            let count = yield test_1.Test.count({ testId: data.id });
-            test.testNumber = count + 1;
-            if (data.questions) {
-                lodash_1.default.forEach(data.questions, (ques) => __awaiter(void 0, void 0, void 0, function* () {
-                    ques.branchId = data.branchId;
-                    ques.qid = data._id;
-                    questions.push(ques);
-                    ques = ques._id;
-                }));
-            }
             test.save((err, result) => {
                 if (err || !result) {
                     console.log(err);
@@ -43,7 +34,6 @@ const testCtrl = {
                     }
                     return resolve(Object.assign(Object.assign({}, settings_1.errorObj), { message: "unable to add test", data: result, err }));
                 }
-                questions = questions.map((item) => item.testId = result._id);
                 return resolve(Object.assign(Object.assign({}, settings_1.successObj), { message: "test added successfully", data: result }));
             });
         }));
@@ -62,9 +52,9 @@ const testCtrl = {
     all: (data) => {
         return new Promise(resolve => {
             if (data.testName)
-                data.testName = { $regex: new RegExp(data.testName, 'i') };
+                data.testName = { $regex: new RegExp(data.testName, "i") };
             if (data.testNumber)
-                data.testNumber = { $regex: new RegExp(data.testNumber, 'i') };
+                data.testNumber = { $regex: new RegExp(data.testNumber, "i") };
             if (data._ids) {
                 let _ids = [];
                 data._ids.map((item) => {
@@ -81,6 +71,6 @@ const testCtrl = {
                 return resolve(Object.assign(Object.assign({}, settings_1.successObj), { message: "test found", data: data2 }));
             });
         });
-    },
+    }
 };
 exports.default = testCtrl;

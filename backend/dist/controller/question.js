@@ -1,9 +1,5 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const lodash_1 = __importDefault(require("lodash"));
 const settings_1 = require("../config/settings");
 const question_1 = require("../model/question");
 const _utils_1 = require("./_utils");
@@ -11,9 +7,13 @@ exports.default = {
     add: (data) => {
         return new Promise((resolve) => {
             let question = new question_1.Question;
-            lodash_1.default.each(data, (value, key) => {
-                question[key] = value;
-            });
+            // _.each(data, (value: any, key: keyof QuestionDocument ) => {
+            //     (question[key] as any) = value;
+            //     // console.log(key, value, "QUESTIon")
+            // });
+            question.questionBody = data.questionBody;
+            question.solution = data.solution;
+            question.answers = data.answers;
             question.save((err, result) => {
                 if (err || !result) {
                     if (err.code == 11000) {

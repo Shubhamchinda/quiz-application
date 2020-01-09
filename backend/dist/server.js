@@ -12,5 +12,6 @@ app_1.default.use(errorhandler_1.default());
 const server = app_1.default.listen(process.env.PORT || 5000, () => {
     console.log("App is running at 5000 in");
     console.log("  Press CTRL-C to stop\n");
+    app_1.default.get("env");
 });
 exports.default = server;

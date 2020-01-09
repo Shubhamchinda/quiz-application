@@ -14,13 +14,7 @@ const questionSchema = new mongoose_1.default.Schema({
             correctAnswer: Boolean
         }
     ],
-    matchQuestions: [
-        {
-            question: String,
-            answer: String,
-            match: String
-        }
-    ],
+    marks: Number
 });
 // create the model for users and expose it to our app
 exports.Question = mongoose_1.default.model("questions", questionSchema);

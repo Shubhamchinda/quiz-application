@@ -11,10 +11,22 @@ const testSchema = new mongoose_1.default.Schema({
     totalMarks: Number,
     duration: String,
     description: String,
-    questions: [{ type: String, ref: 'testQuestions' }],
+    questions: [
+        {
+            questionBody: String,
+            solution: String,
+            marks: Number,
+            answers: [
+                {
+                    answer: String,
+                    correctAnswer: Boolean
+                }
+            ]
+        }
+    ],
     testNumber: String,
     setFiles: Array,
     answerFiles: Array,
     timeStamp: { type: Date, default: Date.now }
 });
-exports.Test = mongoose_1.default.model('tests', testSchema);
+exports.Test = mongoose_1.default.model("tests", testSchema);
