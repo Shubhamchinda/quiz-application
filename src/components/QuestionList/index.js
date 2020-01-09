@@ -199,7 +199,7 @@ class QuestionList extends Component {
     const { data, search } = this.state;
     return (
       <Card bordered={true} title="All Questions">
-        <div style={{ display: "flex" }}>
+        {/* <div style={{ display: "flex" }}>
           <Input
             className={styles.TopicsInput}
             onChange={this.handleInputSearch}
@@ -212,7 +212,7 @@ class QuestionList extends Component {
           <Button className={styles.Reset} onClick={this.handleInputReset}>
             Reset
           </Button>
-        </div>
+        </div> */}
         <Table
           columns={columns}
           dataSource={search ? data2 : data}
