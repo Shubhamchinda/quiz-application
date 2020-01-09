@@ -262,7 +262,7 @@ class AddQuesToTest extends PureComponent {
                     value={marksTotal}
                   />
                 </Card>
-                <Card title={"Quiz Descriptions :"} className={styles.CardForm}>
+                <Card title={"Quiz Description :"} className={styles.CardForm}>
                   <Draft
                     text={description}
                     onChange={data => {

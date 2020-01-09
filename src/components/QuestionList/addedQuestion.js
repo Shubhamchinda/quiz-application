@@ -195,7 +195,7 @@ class AddQuestionTable extends Component {
     }
 
     return (
-      <Card bordered={true} title="Questions in test">
+      <Card bordered={true} title="Questions in Quiz">
         {loading ? <Spin /> : <Table
           columns={columns}
           dataSource={newQuesData}
